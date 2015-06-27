@@ -1,0 +1,61 @@
+[user]
+	name = Tripp Wickersham
+	email = trippwickersham@gmail.com
+[core]
+  autocrlf = input
+  ignorecase = false
+  excludesfile = ~/.config/git/.gitignore_global
+[color]
+  ui = auto
+  diff = auto
+  status = auto
+  branch = auto
+[alias]
+  st = status
+  df = diff
+  dt = difftool
+  mt = mergetool
+  co = checkout
+  ci = commit
+  cc = commit -am
+  br = branch
+  sta = stash
+  pl = pull
+  ps = push
+  f = fetch --all
+  r = rebase -i
+  rc = rebase --continue
+  # rr, because rm is taken
+  rr = rebase -i master
+  rro = rebase -i origin/master
+  # std one line commit
+  log1 = log --pretty=oneline --abbrev-commit --decorate --graph
+  # Like log1, but w/ dates/authors
+  lg = log --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset %C(blue)%an%Creset %Cgreen(%cr)%n%C(bold)%s%Creset%n%b' --date=relative --all
+  l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset' --abbrev-commit --date=relative -n25 --all
+  la = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset' --abbrev-commit --date=relative --all
+  ll = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset' --abbrev-commit --date=relative -n25
+  lla = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset' --abbrev-commit --date=relative
+  cip = commit --patch -m
+  cii = commit --interactive -m
+  changes = diff --name-status
+  # Diff stat master
+  # Diff stat ref
+  ds = "!ds() { echo; git log --no-color --pretty=oneline $1 | while read line; do echo $line; echo '--------------------------------------------------------------------------------'; echo $line | cut -d ' ' -f 1 | xargs -I {} git diff --stat {}^..{} -- $2; echo; done; }; ds"
+  dsm = !git ds master.. $1
+  dsom = !git ds master..origin/master
+  dsp = !git ds $1^..$1 $2
+  d = "!d() { echo; git log --no-color --pretty=oneline $1 | while read line; do echo $line; echo '--------------------------------------------------------------------------------'; echo $line | cut -d ' ' -f 1 | xargs -I {} git diff {}^..{} -- $2; echo; done; }; d"
+  dm = !git d master.. $1
+  dom = !git d master..origin/master
+  dp = !git d $1^..$1 $2
+  # Push remote run
+  prr = !git push origin +HEAD:remote-run/<teamcity name>/$(git rev-parse --abbrev-ref HEAD)
+  drr = !git push origin :remote-run/<teamcity name>/$(git rev-parse --abbrev-ref HEAD)
+  ptrr = !git push origin +HEAD:remote-test-run-local/<teamcity name>/$(git rev-parse --abbrev-ref HEAD)
+  dtrr = !git push origin :remote-test-run-local/<teamcity name>/$(git rev-parse --abbrev-ref HEAD)
+  # Force Push Remote Branch
+  pr = !git push origin $1 +HEAD:$(git rev-parse --abbrev-ref HEAD)
+  track = !git branch -u origin/$(git rev-parse --abbrev-ref HEAD) $(git rev-parse --abbrev-ref HEAD)
+[push]
+  default = tracking

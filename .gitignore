@@ -7,3 +7,6 @@
 !*.bashrc
 !*.bash_profile
 !*.gitignore
+!*.gitconfig
+!*.git-completion.bash
+!/l33t/
